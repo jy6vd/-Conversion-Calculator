@@ -22,8 +22,9 @@ class ConverterViewController: UIViewController {
     var converters: [converter] = [converter(label: "fahrenheit to celcius", outputVar: "°C", inputVar: "°F"), converter(label: "celcius to fahrenheit", outputVar: "°F", inputVar: "°C"), converter(label: "miles to kilometers", outputVar: "km", inputVar: "mi"), converter(label: "kilometers to miles", outputVar: "mi", inputVar: "km")]
     
     
-    var currentString: String = ""
-    var total = 0.0, forClear = " ", outputVar = "°C", inputVar = "°F"
+    var currentString: String = "°F"
+    var outputString: String = "°C"
+    var total = 0.0, outputVar = "°C", inputVar = "°F"
     override func viewDidLoad() {
         super.viewDidLoad()
         outputDisplay.text = "°C"
@@ -35,10 +36,16 @@ class ConverterViewController: UIViewController {
         for converter in converters{
             alert.addAction(UIAlertAction(title: converter.label, style: UIAlertAction.Style.default, handler: {
                 (alertAction) -> Void in
-                //self.inputDisplay.text = "°F"
+
                 self.inputVar = converter.inputVar
-                // self.outputDisplay.text = "°C"
+                self.currentString.removeLast(2)
+                self.currentString = self.currentString + self.inputVar
+                self.inputDisplay.text = self.currentString
+                
                 self.outputVar = converter.outputVar
+                self.outputString.removeLast(2)
+                self.outputString = self.outputString + self.outputVar
+                self.outputDisplay.text = self.outputString
             }))
         }
         self.present(alert,animated: true,completion: nil)
